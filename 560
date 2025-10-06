@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int> mp;
+        mp[0] = 1;  // to handle subarray starting from index 0
+        int curr_sum = 0;
+        int count = 0;
+
+        for (int num : nums) {
+            curr_sum += num;
+
+            // check if there exists a prefix sum that leads to k
+            if (mp.find(curr_sum - k) != mp.end()) {
+                count += mp[curr_sum - k];
+            }
+
+            mp[curr_sum]++;
+        }
+
+        return count;
+    }
+};
