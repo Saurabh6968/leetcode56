@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int findMaxLength(vector<int>& nums) {
+        unordered_map<int, int> mp; // prefixSum -> firstIndex
+        int sum = 0, maxLen = 0;
+        mp[0] = -1; // base case: sum=0 before array starts
+
+        for (int i = 0; i < nums.size(); i++) {
+            // treat 0 as -1
+            sum += (nums[i] == 0 ? -1 : 1);
+
+            if (mp.find(sum) != mp.end()) {
+                maxLen = max(maxLen, i - mp[sum]);
+            } else {
+                mp[sum] = i; // store first occurrence of this sum
+            }
+        }
+        return maxLen;
+    }
+};
